@@ -14,16 +14,24 @@ func GetBook(c *gin.Context) {
 
 	err := models.GetAllBooks(&book)
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{
-			"code":    404,
-			"message": "Empty data",
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    500,
+			"message": err.Error(),
 		})
 	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"code":    200,
-			"message": "List of books",
-			"data":    book,
-		})
+		if len(book) > 0 {
+			c.JSON(http.StatusOK, gin.H{
+				"code":    200,
+				"message": "List of books",
+				"data":    book,
+			})
+		} else {
+			c.JSON(http.StatusNotFound, gin.H{
+				"code":    404,
+				"message": "Empty data",
+			})
+		}
+
 	}
 }
 
