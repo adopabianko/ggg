@@ -1,1 +1,1 @@
-# Go Gin Gorm Bolierplate
+# Go Gin Gorm Boilerplate
